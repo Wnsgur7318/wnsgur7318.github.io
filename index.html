@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>정준혁 | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --border: #e8e4dc;
+      --text: #1a1a18;
+      --sub: #6b6860;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --tag-bg: #f0f0ec;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 48px;
+      height: 60px;
+      background: rgba(247,246,242,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px; font-weight: 600;
+      color: var(--accent); letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      color: var(--sub); transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* SECTIONS */
+    section { padding: 100px 48px; max-width: 1000px; margin: 0 auto; }
+    section:first-of-type { padding-top: 140px; }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400; line-height: 1.15;
+      margin-bottom: 48px;
+    }
+    .divider {
+      width: 40px; height: 2px;
+      background: var(--accent);
+      margin: 16px 0 48px;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 80px;
+    }
+    .hero-greeting {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; color: var(--accent);
+      letter-spacing: 0.08em; margin-bottom: 20px;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 400; line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .hero-name span { color: var(--accent); }
+    .hero-sub {
+      font-size: 16px; color: var(--sub);
+      max-width: 480px; margin-bottom: 40px; line-height: 1.8;
+    }
+    .hero-contacts {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text); text-decoration: none;
+      background: var(--surface);
+      transition: all 0.2s;
+    }
+    .contact-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.12);
+    }
+    .contact-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ABOUT */
+    #about .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: start;
+    }
+    .about-text { font-size: 15px; color: var(--sub); line-height: 1.9; }
+    .about-info { display: flex; flex-direction: column; gap: 16px; }
+    .info-row {
+      display: flex; align-items: baseline; gap: 12px;
+      padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.08em;
+      color: var(--accent); min-width: 80px;
+    }
+    .info-value { font-size: 14px; font-weight: 500; }
+
+    /* SKILLS */
+    #skills .skills-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .skill-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .skill-card-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .skill-icon { font-size: 18px; }
+    .skill-card-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-tag {
+      font-size: 12px; font-weight: 500;
+      background: var(--tag-bg); color: var(--sub);
+      padding: 3px 10px; border-radius: 999px;
+    }
+
+    /* PROJECTS */
+    #projects .projects-list { display: flex; flex-direction: column; gap: 24px; }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .project-card:hover {
+      box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+      transform: translateY(-2px);
+    }
+    .project-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .project-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px; font-weight: 400;
+    }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--accent); text-decoration: none;
+      padding: 6px 14px; border: 1.5px solid var(--accent);
+      border-radius: 999px; transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .project-link:hover {
+      background: var(--accent); color: #fff;
+    }
+    .project-tagline {
+      font-size: 13px; color: var(--accent); font-weight: 500;
+      margin-bottom: 12px; font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.02em;
+    }
+    .project-desc {
+      font-size: 14px; color: var(--sub); line-height: 1.85;
+      margin-bottom: 20px;
+    }
+    .project-features { margin-bottom: 20px; }
+    .project-features-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--sub);
+      margin-bottom: 10px;
+    }
+    .feature-list { display: flex; flex-direction: column; gap: 6px; }
+    .feature-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--text);
+    }
+    .feature-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-top: 7px; flex-shrink: 0;
+    }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .stack-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 600;
+      background: var(--accent-light); color: var(--accent);
+      padding: 3px 10px; border-radius: 4px;
+    }
+    .project-role-badge {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--tag-bg); color: var(--sub);
+      padding: 3px 10px; border-radius: 4px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 48px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--sub);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      nav { padding: 0 24px; }
+      section { padding: 80px 24px; }
+      #about .about-grid { grid-template-columns: 1fr; }
+      #skills .skills-grid { grid-template-columns: 1fr 1fr; }
+      .project-top { flex-direction: column; gap: 12px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 480px) {
+      #skills .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">JH.DEV</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-greeting">// Hello, World</p>
+  <h1 class="hero-name">정준혁<br><span>Jung Jun Hyuk</span></h1>
+  <p class="hero-sub">문제를 구조적으로 분석하고, 완성도 높은 결과물로 구현하는 개발자입니다.</p>
+  <div class="hero-contacts">
+    <a href="mailto:wnsgur7318@dongyang.ac.kr" class="contact-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </svg>
+      wnsgur7318@dongyang.ac.kr
+    </a>
+    <a href="https://github.com/Wnsgur7318" target="_blank" class="contact-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+      </svg>
+      github.com/Wnsgur7318
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">01 / About</p>
+  <h2 class="section-title">About Me</h2>
+  <div class="divider"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      동양미래대학교 컴퓨터소프트웨어공학과 재학 중입니다.<br><br>
+      그래픽스 렌더링 엔진 개발부터 웹 서비스 구축까지, 다양한 도메인에서 직접 구현하며 성장하고 있습니다. 낮은 레벨의 시스템 프로그래밍부터 사용자와 맞닿는 프론트엔드까지, 폭넓은 관심을 바탕으로 기술의 깊이를 더해가고 있습니다.
+    </div>
+    <div class="about-info">
+      <div class="info-row">
+        <span class="info-label">NAME</span>
+        <span class="info-value">정준혁 (Jung Jun Hyuk)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">EMAIL</span>
+        <span class="info-value">wnsgur7318@dongyang.ac.kr</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">SCHOOL</span>
+        <span class="info-value">동양미래대학교</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">MAJOR</span>
+        <span class="info-value">컴퓨터소프트웨어공학과</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">YEAR</span>
+        <span class="info-value">2024 입학</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">INTEREST</span>
+        <span class="info-value">게임 개발 / 그래픽스</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">02 / Skills</p>
+  <h2 class="section-title">Technical Skills</h2>
+  <div class="divider"></div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">💻</span>
+        <span class="skill-card-title">Languages</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">C</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Python</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🌐</span>
+        <span class="skill-card-title">Web Development</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">HTML5</span>
+        <span class="skill-tag">CSS3</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🎮</span>
+        <span class="skill-card-title">Game Engine</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Unity</span>
+        <span class="skill-tag">Metal</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🎬</span>
+        <span class="skill-card-title">Multimedia</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Adobe Premiere Pro</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🗄️</span>
+        <span class="skill-card-title">Database & Tools</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Visual Studio</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">03 / Projects</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="divider"></div>
+  <div class="projects-list">
+
+    <!-- MovieVoti -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">MovieVoti</div>
+        <a href="https://github.com/Wnsgur7318/MovieVoti" target="_blank" class="project-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub →
+        </a>
+      </div>
+      <p class="project-tagline">단순한 평점을 넘어, 관람 경험을 타임라인으로 기록하는 영화 로깅 커뮤니티</p>
+      <p class="project-desc">
+        별점 중심의 기존 영화 플랫폼과 달리, '언제, 어디서, 누구와, 어떤 기분으로 봤는지'를 기록하는 데 집중한 서비스입니다.
+        TMDB와 KOFIC API를 연동해 실시간 영화 데이터를 제공하며, 개인화된 관람 히스토리와 소셜 네트워킹 확장을 목표로 설계되었습니다.
+      </p>
+      <div class="project-features">
+        <p class="project-features-title">Key Features</p>
+        <div class="feature-list">
+          <div class="feature-item"><span class="feature-dot"></span>사용자 맞춤형 영화 관람 타임라인 기록</div>
+          <div class="feature-item"><span class="feature-dot"></span>TMDB API 연동 — 영화 검색 및 상세 정보 제공</div>
+          <div class="feature-item"><span class="feature-dot"></span>KOFIC API 연동 — 실시간 박스오피스 데이터 제공</div>
+        </div>
+      </div>
+      <div class="project-stack">
+        <span class="stack-badge">Java</span>
+        <span class="stack-badge">Spring Boot</span>
+        <span class="stack-badge">MySQL</span>
+        <span class="stack-badge">HTML/CSS</span>
+        <span class="stack-badge">JavaScript</span>
+      </div>
+    </div>
+
+    <!-- streamit -->
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">streamit-project</div>
+        <a href="https://github.com/Wnsgur7318/streamit-project" target="_blank" class="project-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub →
+        </a>
+      </div>
+      <p class="project-tagline">Stack Overflow 2025 개발자 설문 데이터를 탐색하는 인터랙티브 분석 대시보드</p>
+      <p class="project-desc">
+        전 세계 개발자 트렌드를 정적 리포트가 아닌, 사용자가 직접 탐색하는 방식으로 전달합니다.
+        국가·기술별 필터와 Plotly 시각화를 통해 원하는 인사이트를 즉각적으로 확인할 수 있도록 구현했습니다.
+      </p>
+      <div class="project-features">
+        <p class="project-features-title">Key Features</p>
+        <div class="feature-list">
+          <div class="feature-item"><span class="feature-dot"></span>국가별 필터 기능 — 특정 국가의 언어 사용 Top 15 시각화</div>
+          <div class="feature-item"><span class="feature-dot"></span>언어 심층 분석 — 사용/학습 희망 언어, DB, 플랫폼 등 다중 주제 선택</div>
+          <div class="feature-item"><span class="feature-dot"></span>세미콜론 구분 복수 응답 데이터 전처리 파이프라인 구현</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:4px;">
+        <div class="project-stack" style="margin:0;">
+          <span class="stack-badge">Python</span>
+          <span class="stack-badge">Streamlit</span>
+          <span class="stack-badge">Pandas</span>
+          <span class="stack-badge">Plotly</span>
+        </div>
+        <span class="project-role-badge">데이터 전처리 / README</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Jung Jun Hyuk · Designed & Built with HTML/CSS</p>
+</footer>
+
+</body>
+</html>
